@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: mandelbrot.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: mandelbrot.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+* @Author: Adrián Epifanio
+* @File Mandelbrot drawing
+* @summary Universidad de La Laguna
+*          Escuela Superior de Ingeniería y Tecnología
+*          Grado en Ingeniería Informática
+*          Asignatura: Programación de Aplicaciones Interactivas
+*          Curso: 3º
+*          Práctica 7 PAI - Mandelbrot
+* @link  Enunciado de la práctica:
+*         https://github.com/fsande/PAI-P07-Mandelbrot/blob/master/2019-2020_p07_Mandelbrot.md
+*         Repositorio git con este (y otros) códigos:
+*         https://github.com/ULL-ESIT-INF-PAI-2019-2020/practica-07-mandelbrot-AdrianEpi
+* @Date:   2020-03-28 12:35:56
+* @Last Modified by:   Adrián Epifanio
+* @Last Modified time: 2020-03-30 18:33:37
+*/
+'use strict';
+
+mainProgram();
+
+/**
+ * @desc The main program, starts the mandelbrot.
+ */
+function mainProgram() {
+  let pointsNumber = prompt('Enter number of points:', '0');
+  const canvas = document.getElementById('myCanvas');
+  const ctx = canvas.getContext('2d');
+  let pointsVector = [];
+  if (pointsNumber >= 1) {
+    generateMandelbrot(canvas, ctx);
+    pointsVector = generateRandomPoints(canvas, pointsNumber, pointsVector);
+    monteCarloSampling(canvas, ctx, pointsVector);
+  }
+  else {
+    alert('Canceled or Error in input: Input must be greater than 1.');
+  }
+}
+
+/**
+ * @desc Determines if the coordinates are in mandelbrot.
+ *
+ * @param      {number}   coordinateX  The coordinate x
+ * @param      {number}   coordinateY  The coordinate y
+ * @return     {boolean}  True if is in mandelbrot, False otherwise.
+ */
+function isInMandelbrot(coordinateX, coordinateY) {
+  let realPart = coordinateX;
+  let imaginaryPart = coordinateY;
+  const MAXITER = 1000; // I have not put 10000 because it takes a long time and prints the same result
+  for (let counter = 0; counter &lt; MAXITER; counter++) {
+    let temporalRealPart = (realPart * realPart) - (imaginaryPart * imaginaryPart) + coordinateX;
+    let temporalImaginaryPart = (2 * realPart * imaginaryPart) + coordinateY;
+    realPart = temporalRealPart;
+    imaginaryPart = temporalImaginaryPart;
+
+  }
+  if (realPart * imaginaryPart &lt;= 2) {
+    return true;
+  }
+  return false;
+}
+
+/**
+ * @desc Generates and prints the mandelbrot.
+ *
+ * @param      {element}  canvas  The canvas
+ * @param      {element}  ctx     The context
+ */
+function generateMandelbrot(canvas, ctx) {
+  const magnificationFactor = 200;
+  let scaleX = 2;
+  const scaleY = 1.5;
+  for (let x = 0; x &lt; canvas.width; x++) {
+    for (let y = 0; y &lt; canvas.height; y++) {
+      if (isInMandelbrot((x / magnificationFactor - scaleX), (y / magnificationFactor - scaleY)) === true) {
+        ctx.fillRect(x, y, 1, 1);
+      }
+    }
+  }
+}
+
+/**
+ * @desc Generates random points in the interval [(-2.0, 0), (0.5, 1.125)].
+ *
+ * @param      {element}  canvas        The canvas
+ * @param      {number}   pointsNumber  The points number
+ * @param      {Array}    pointsVector  The points vector
+ * @return     {Array}    The new vector with the random positions
+ */
+function generateRandomPoints(canvas, pointsNumber, pointsVector) {
+  const XMIN = -2.0;
+  const XMAX = 0.5;
+  const YMIN = 0.0;
+  const YMAX = 1.125;
+  for (let pointsCounter = 0; pointsCounter &lt; pointsNumber; pointsCounter++) {
+    pointsVector[pointsCounter] = {
+      x: getRandomNumber(XMIN, XMAX),
+      y: getRandomNumber(YMIN, YMAX),
+    }
+  }
+  return pointsVector;
+}
+
+/**
+ * @desc Gets the a random x / y between te interval min and max.
+ *
+ * @param      {number}  min    The minimum x
+ * @param      {number}  max    The maximum x
+ * @return     {number}  The random x / y.
+ */
+function getRandomNumber(min, max) {
+  let number = parseFloat(Math.random() * (max - min) + min);
+  return number;
+}
+
+/**
+ * @desc Uses the Monte Carlos's sampling for calculate the area and an error of the mandelbrot
+ *
+ * @param      {element}  canvas        The canvas
+ * @param      {element}  ctx           The context
+ * @param      {Array}    pointsVector  The points vector
+ */
+function monteCarloSampling(canvas, ctx, pointsVector) {
+  let validPoints = 0;
+  for (let counter = 0; counter &lt; pointsVector.length; counter++) {
+    if (isInMandelbrot(pointsVector[counter].x, pointsVector[counter].y) === true) {
+      validPoints++;
+    }
+  }
+  let area = 2 * 2.5 * 1.125 * validPoints / pointsVector.length;
+  let error = area / Math.sqrt(pointsVector.length);
+  ctx.font = 'bold 20px sans-serif';
+  ctx.fillText('Area: ', 50, 50);
+  ctx.fillText(area, 110, 50);
+  ctx.fillText('Error: ', 50, 75);
+  ctx.fillText(error, 110, 75);
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#generateMandelbrot">generateMandelbrot</a></li><li><a href="global.html#generateRandomPoints">generateRandomPoints</a></li><li><a href="global.html#getRandomNumber">getRandomNumber</a></li><li><a href="global.html#isInMandelbrot">isInMandelbrot</a></li><li><a href="global.html#mainProgram">mainProgram</a></li><li><a href="global.html#monteCarloSampling">monteCarloSampling</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed Apr 01 2020 10:23:28 GMT+0100 (WEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
