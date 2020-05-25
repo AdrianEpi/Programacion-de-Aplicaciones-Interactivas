@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: country-stats.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: country-stats.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @author Adrián Epifanio Rodríguez Hernández
+ *         alu0101158280@ull.edu.es
+ * @file Métricas de los países utilizando los módulos
+ * @since 16.03.2020
+ * @summary Universidad de La Laguna
+    Escuela Superior de Ingeniería y Tecnología
+    Grado en Ingeniería Informática
+    Asignatura: Programación de Aplicaciones Interactivas
+    Curso: 3º
+    Práctica 4 PAI - El problema de las 8 reinas
+    @link  Enunciado de la práctica:
+              https://github.com/fsande/PAI-P05-JSON-Statistics/blob/master/2019-2020_p05_JSONStatistics.md
+              Repositorio git con este (y otros) códigos:
+              https://github.com/ULL-ESIT-INF-PAI-2019-2020/practica-05-json-data-AdrianEpi
+    @version
+                  16/03/2020 - Creación (primera versión) del código
+                  16/03/2020 - Versión presentada para evaluación
+ */
+const STATS_MODULE = require('../json/country-data.js');
+
+main();
+function main() {
+  searchMaxPopulation();
+  searchLowestPopulation();
+  searchMaxPopulationDensityFromAContinent('North America');
+  searchMaxPopulationDensityFromAContinent('South America');
+  searchMaxLifeExpectancy(3);
+  averageMaleHeightPerContinent();
+  //mostPractisedReligion(ammount);
+  lowestTemperatturesPerContinent();
+
+}
+/**
+ * Searchs the country with the maximum population
+ */
+function searchMaxPopulation() {
+  let countryName = STATS_MODULE[0].country;
+  let population_ = STATS_MODULE[0].population;
+  for (let country in STATS_MODULE) {
+    if ((STATS_MODULE[country].population > population_) &amp;&amp; (STATS_MODULE[country].population != null)) {
+      countryName = STATS_MODULE[country].country;
+      population_ = STATS_MODULE[country].population;
+    }
+  }
+  console.log('The most populated country is: ', countryName, ' with', population_, 'habitants.');
+}
+
+/**
+ * Searchs the country with the minimum population
+ */
+function searchLowestPopulation() {
+  let countryName = STATS_MODULE[0].country;
+  let population_ = STATS_MODULE[0].population;
+  for (let country in STATS_MODULE) {
+    if ((STATS_MODULE[country].population &lt; population_) &amp;&amp; (STATS_MODULE[country].population != null)) {
+      countryName = STATS_MODULE[country].country;
+      population_ = STATS_MODULE[country].population;
+    }
+  }
+  console.log('The less populated country is: ', countryName, ' with', population_, 'habitants.');
+}
+
+/**
+ * Searchs the country with the maximum population density from a given continent
+ * @param {string} continent  The continent name
+ */
+function searchMaxPopulationDensityFromAContinent(continent) {
+  let countryName = STATS_MODULE[0].country;
+  let density_ = STATS_MODULE[0].density;
+  for (let country in STATS_MODULE) {
+    if (STATS_MODULE[country].continent === continent) {
+      if(STATS_MODULE[country].density > density_) {
+        countryName = STATS_MODULE[country].country;
+        density_ = STATS_MODULE[country].density;
+      }
+    }
+  }
+  console.log('The less populated country in ', continent, 'is : ', countryName);
+}
+
+/**
+ * Searchs the countries with the maximum life expectancy
+ * @param {int} ammount  The ammount of countries
+ */
+function searchMaxLifeExpectancy(ammount) {
+  let countryName = STATS_MODULE[0].country;
+  let expectancy_ = STATS_MODULE[0].expectancy;
+  let country_ = [];
+  for(let counter = 0; counter &lt; ammount; counter++) {
+    for (let country in STATS_MODULE) {
+      if ((STATS_MODULE[country].expectancy > expectancy_) &amp;&amp; !country_.includes(STATS_MODULE[country].country)) {
+          countryName = STATS_MODULE[country].country;
+          expectancy_ = STATS_MODULE[country].expectancy;
+        }
+    }
+    country_.push(countryName);
+    console.log('The country with highest life expectancy is : ', countryName);
+  }
+}
+
+/**
+ * Searchs the continent average male height
+ */
+function averageMaleHeightPerContinent() {
+  let continent_ = [];
+  let counter = 0;
+  for (let country in STATS_MODULE) {
+    if (!continent_.includes(STATS_MODULE[country].continent) &amp;&amp; STATS_MODULE[country].continent != null) {
+      let newContinent = ' ';
+      newContinent = STATS_MODULE[country].continent;
+      continent_.push(newContinent);
+      counter++;
+    }
+  }
+  for (let counter = 0; counter &lt; continent_.length; counter++) {
+    let totalHeight = 0.0;
+    counter_ = 0;
+    for (let country in STATS_MODULE) {
+      if (STATS_MODULE[country].continent === continent_[counter] &amp;&amp; STATS_MODULE[country].height != null) {
+          totalHeight += parseInt(STATS_MODULE[country].height);
+          counter_++;
+      }
+    }
+    if(counter_ != 0) {
+      totalHeight = totalHeight / counter_;
+    }
+    console.log('The average male height in ', continent_[counter], 'is : ', totalHeight.toFixed(2));
+  }
+}
+
+/**
+ * Searchs the percentage of the the most practised religions of the world
+ * @param {int} ammount The ammount of religions you want to search
+ */
+function mostPractisedReligion(ammount) {
+  let religion_ = [];
+  let counter_ = 0;
+  let totalReligion = 0;
+  for (let country in STATS_MODULE) {
+    if (!religion_.includes(STATS_MODULE[country].religion) &amp;&amp; STATS_MODULE[country].religion != null) {
+      religion_[counter_] = {
+        name: STATS_MODULE[country].religion,
+        number: counter_,
+        ammount: 0,
+        printed: false,
+      }
+      counter_++;
+    }
+    if (STATS_MODULE[country].religion != null) {
+      totalReligion++;
+    }
+  }
+
+  for (let name in religion_) {
+    for (let country in STATS_MODULE) {
+      if (STATS_MODULE[country].religion === religion_[name].name &amp;&amp; STATS_MODULE[country].religion != null) {
+        religion_[name].ammount++;
+      }
+    }
+  }
+  for (let counter = 0; counter &lt; ammount; counter++) {
+    let topReligion = 0;
+    let topCounter = 0;
+    for (let name in religion_) {
+      if (religion_[topReligion].ammount &lt; religion_[name].ammount &amp;&amp; religion_[name].printed === false) {
+        console.log(religion_[name].number)
+        topReligion = religion_[name].number;
+      }
+      topCounter++;
+    }
+    console.log(topReligion)
+  //  religion_[totalReligion].printed = true;
+    //religion_[totalReligion].ammount = religion_[totalReligion].ammount / totalReligion * 100;
+  }
+  for (name in religion_) {
+    if (religion_[name].printed === true) {
+      console.log('Religion: ', religion_[name].name, religion_[name].ammount.toFixed(2), '%');
+    }
+  }
+}
+//mostPractisedReligion(5);
+
+/**
+ * Searchs the lowest temperatures per continent
+ */
+function lowestTemperatturesPerContinent() {
+  let continent_ = [];
+  let counter = 0;
+  const TEMPORALTEMP = 100;
+  for (let country in STATS_MODULE) {
+    if (!continent_.includes(STATS_MODULE[country].continent) &amp;&amp; STATS_MODULE[country].continent != null) {
+      let newContinent = ' ';
+      newContinent = STATS_MODULE[country].continent;
+      continent_.push(newContinent);
+      counter++;
+    }
+  }
+  for (let counter = 0; counter &lt; continent_.length; counter++) {
+    let lowestTemp = TEMPORALTEMP;
+    counter_ = 0;
+    for (let country in STATS_MODULE) {
+      if (STATS_MODULE[country].continent === continent_[counter] &amp;&amp; STATS_MODULE[country].temperature != null) {
+        if (STATS_MODULE[country].temperature &lt; lowestTemp) {
+          lowestTemp = parseFloat(STATS_MODULE[country].temperature);
+        }
+        counter_++;
+      }
+    }
+    if(lowestTemp == TEMPORALTEMP) {
+      lowestTemp = 'Unknown';
+    }
+    else {
+      lowestTemp = lowestTemp.toFixed(2);
+    }
+    console.log('The lowest temperature in', continent_[counter], 'is : ', lowestTemp);
+  }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#averageMaleHeightPerContinent">averageMaleHeightPerContinent</a></li><li><a href="global.html#lowestTemperatturesPerContinent">lowestTemperatturesPerContinent</a></li><li><a href="global.html#mostPractisedReligion">mostPractisedReligion</a></li><li><a href="global.html#searchLowestPopulation">searchLowestPopulation</a></li><li><a href="global.html#searchMaxLifeExpectancy">searchMaxLifeExpectancy</a></li><li><a href="global.html#searchMaxPopulation">searchMaxPopulation</a></li><li><a href="global.html#searchMaxPopulationDensityFromAContinent">searchMaxPopulationDensityFromAContinent</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed Mar 18 2020 09:43:57 GMT+0000 (WET)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
