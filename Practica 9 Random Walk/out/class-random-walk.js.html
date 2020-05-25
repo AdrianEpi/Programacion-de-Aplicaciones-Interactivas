@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: class-random-walk.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: class-random-walk.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+* @Author: Adrián Epifanio
+* @File RandomWalk Class
+* @summary Universidad de La Laguna
+*          Escuela Superior de Ingeniería y Tecnología
+*          Grado en Ingeniería Informática
+*          Asignatura: Programación de Aplicaciones Interactivas
+*          Curso: 3º
+*          Práctica 8 PAI - Poker
+* @link  Enunciado de la práctica:
+*         https://github.com/fsande/PAI-P09-RandomWalk/blob/master/2019-2020_p09_RandomWalk.md
+*         Repositorio git con este (y otros) códigos:
+*         https://github.com/ULL-ESIT-INF-PAI-2019-2020/practica-9-random-walk-AdrianEpi
+* @Date:   2020-04-19 11:35:56
+* @Last Modified by:   Adrián Epifanio
+*/
+'use strict';
+
+/**
+ * @desc This class describes a random walk.
+ *
+ * @class      RandomWalk (name)
+ */
+class RandomWalk {
+
+  /**
+   * @desc Constructs a new instance.
+   *
+   * @param      {element}  canvas_     The canvas
+   * @param      {element}  ctx_        The context
+   * @param      {string}  gridColor_  The grid color
+   * @param      {string}  lineColor_  The line color
+   */
+  constructor(canvas_, ctx_, lineColor_, gridSize_) {
+    this.canvas = canvas_;
+    this.ctx = ctx_;
+    this.lineColor = lineColor_;
+    this.gridSize = gridSize_;
+    this.positionX = 0;
+    this.positionY = 0;
+  }
+
+  /**
+   * @desc Gets the canvas.
+   *
+   * @return     {element}  The canvas.
+   */
+  get_Canvas () {
+    return this.canvas;
+  }
+
+  /**
+   * @desc Gets the context.
+   *
+   * @return     {element}  The context.
+   */
+  get_Context () {
+    return this.ctx;
+  }
+
+  /**
+   * @desc Gets the line color.
+   *
+   * @return     {string}  The line color.
+   */
+  get_LineColor () {
+    return this.lineColor;
+  }
+
+  /**
+   * @desc Gets the grid size.
+   *
+   * @return     {number}  The grid size.
+   */
+  get_GridSize () {
+    return this.gridSize;
+  }
+
+  /**
+   * @desc Gets the position x.
+   *
+   * @return     {number}  The position x.
+   */
+  get_PositionX () {
+    return this.positionX;
+  }
+
+  /**
+   * @desc Gets the position y.
+   *
+   * @return     {number}  The position y.
+   */
+  get_PositionY () {
+    return this.positionY;
+  }
+
+  /**
+   * @desc Sets the canvas.
+   *
+   * @param      {element}  canvas_  The canvas
+   */
+  set_Canvas (canvas_) {
+    this.canvas = canvas_;
+  }
+
+  /**
+   * @desc Sets the context.
+   *
+   * @param      {element}  ctx_    The context
+   */
+  set_Context (ctx_) {
+    this.ctx = ctx_;
+  }
+
+  /**
+   * @desc Sets the line color.
+   *
+   * @param      {string}  lineColor_  The line color
+   */
+  set_LineColor (lineColor_) {
+    this.lineColor = lineColor_;
+  }
+
+  /**
+   * @desc Sets the grid size.
+   *
+   * @param      {number}  gridSize_  The grid size
+   */
+  set_GridSize(gridSize_) {
+    this.gridSize = gridSize_;
+  }
+
+  /**
+   * @desc Sets the position x.
+   *
+   * @param      {number}  positionX_  The position x
+   */
+  set_PositionX (positionX_) {
+    this.positionX = positionX_;
+  }
+
+  /**
+   * @desc Sets the position Y.
+   *
+   * @param      {number}  positionY_  The position Y
+   */
+  set_PositionY (positionY_) {
+    this.positionY = positionY_;
+  }
+
+  /**
+   * @desc Draws the next line of the random walk
+   *
+   * @return     {boolean}  True if it can continue drawing, false otherwise
+   */
+  /* istanbul ignore next */
+  drawNextLine () {
+    let classPoint;
+    let classLine;
+    if (typeof require !== 'undefined') {
+      classPoint = require('./class-point.js'.Point);
+      classLine = require('./class-line.js'.Line);
+    }
+    else {
+      classPoint = Point;
+      classLine = Line;
+    }
+    let pointA = new classPoint(this.positionX, this.positionY);
+    let pointB;
+    let direction = this.selectRandomDirection();
+    if (direction === 'UP') {
+      pointB = new classPoint(this.positionX, (this.positionY + this.gridSize));
+      this.set_PositionY(this.positionY + this.gridSize);
+    }
+    else if (direction === 'DOWN') {
+      pointB = new classPoint(this.positionX, (this.positionY - this.gridSize));
+      this.set_PositionY(this.positionY - this.gridSize);
+    }
+    else if (direction === 'LEFT') {
+      pointB = new classPoint((this.positionX - this.gridSize), this.positionY);
+      this.set_PositionX(this.positionX - this.gridSize);
+    }
+    else if (direction === 'RIGHT') {
+      pointB = new classPoint((this.positionX + this.gridSize), this.positionY);
+      this.set_PositionX(this.positionX + this.gridSize);
+    }
+    else {
+      alert('ERROR, wrong way');
+    }
+
+    if ((this.get_PositionX() &lt;= -this.gridSize) || (this.get_PositionX() >= this.canvas.width + this.gridSize) || (this.get_PositionY() &lt;= -this.gridSize) || (this.get_PositionX() >= this.canvas.width + this.gridSize)) {
+      return false;
+    }
+    else {
+      this.ctx.strokeStyle = this.lineColor;
+      let line = new classLine(pointA, pointB);
+      line.drawLine(this.ctx);
+      return true;
+    }
+  }
+
+  /**
+   * @desc Select the random direction of the next line.
+   *
+   * @return     {string}  The random position
+   */
+  selectRandomDirection () {
+    const DIRECTIONS = new Array('UP', 'DOWN', 'LEFT', 'RIGHT');
+    let randomPosition = this.randomNumber(0, DIRECTIONS.length);
+    let direcion = DIRECTIONS[randomPosition];
+    return direcion;
+  }
+
+
+  /**
+   * @desc Selects a random number of the attributes in DIRECTIONS array
+   *
+   * @param      {number}  lowLimit  The low limit
+   * @param      {number}  upLimit   The up limit
+   * @return     {number}  The random position in the array
+   */
+  randomNumber (lowLimit, upLimit) {
+    let totalPosibilites = upLimit - lowLimit;
+    let randomNumber_ = Math.random() * totalPosibilites;
+    randomNumber_ = Math.floor(randomNumber_);
+    randomNumber_ += parseInt(lowLimit);
+    return randomNumber_;
+  }
+
+}
+
+if (typeof require !== 'undefined') {
+  module.exports = { RandomWalk: RandomWalk };
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Grid.html">Grid</a></li><li><a href="Line.html">Line</a></li><li><a href="Point.html">Point</a></li><li><a href="RandomWalk.html">RandomWalk</a></li></ul><h3>Global</h3><ul><li><a href="global.html#main">main</a></li><li><a href="global.html#randomWalk">randomWalk</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Wed Apr 22 2020 09:38:17 GMT+0100 (WEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

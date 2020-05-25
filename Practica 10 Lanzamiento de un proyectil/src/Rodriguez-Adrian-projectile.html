@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+	<head>
+	  <meta charset="utf-8" />
+	  <title>Rodríguez Adrián</title>
+	  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+	</head>
+
+	<body>
+		<div>
+			<h1>Rodríguez Adrián</h1>
+			<!-- Canvas -->
+			<canvas id="myCanvas" width="800" height="500" style="border:3px solid black;"></canvas>
+			<canvas id="myCanvas2" width="800" height="200" style="border:3px solid black;"></canvas><br><br>
+			<!-- Buttons & inputs -->
+			<input id="button1" class="button_" type="button" onclick="shoot()" value="Shoot" /><br><br>	
+			<input id="button1" class="button_" type="button" onclick="shootFive()" value="Shoot five" /><br>
+			<label for="inputSpeed" class="text_" id="textSpeed">Type the speed:</label><br>
+			<input type="text" class="input_" id="inputSpeed" name="inputSpeed" value="100"><br><br>
+			<label for="inputAngle" class="text_" id="textAngle">Type the angle:</label><br>
+			<input type="text" class="input_" id="inputAngle" name="inputAngle" value="45"><br><br>
+			<link rel="stylesheet" type="text/css" href="./projectile.css">
+			<label for="inputAngle" class="text_" id="textCheckbox">Print trace:</label>
+			<input type="checkbox" class="checkbox_" id="cbox1" value="false"><br><br>
+			<label for="inputFriction" class="text_" id="inputFriction">Type the friction:</label><br>
+			<input type="text" class="input_" id="inputFriction" name="inputFriction" value="0.5"><br><br>
+			<!-- Scrips -->
+			<script src="./class-point.js"></script>
+			<script src="./class-line.js"></script>
+			<script src="./class-randomColor.js"></script>
+			<script src="./class-arrow.js"></script>
+			<script src="./class-projectile.js"></script>
+			<script src="./class-backGround.js"></script>
+			<script src="./projectile-program.js"></script>
+			<!-- Definitions and links -->
+			<h2> Definition:</h2>
+			<p>When an object is projected from rest at an upward angle, its initial velocity can be resolved into two components. These two components operate independently of each other. The upward velocity undergoes constant downward acceleration which will result in it rising to a highest point and then falling backward to the ground. The horizontal motion is constant velocity motion and undergoes no changes due to gravity.The analysis of the motion involves dealing with the two motions independently.</p>
+			<h2> Interest Links:</h2>
+			<a href="https://www.ck12.org/c/physics/projectile-motion-for-an-object-launched-at-an-angle/lesson/Projectile-Motion-for-an-Object-Launched-at-an-Angle-PHYS/">Definition & example</a>
+			<a href="https://github.com/fsande/PAI-P10-Projectile/blob/master/2019-2020_p10_Projectile.md">Exercise Statement</a>
+
+		</div>
+	</body>
+  
+</html>
+ 

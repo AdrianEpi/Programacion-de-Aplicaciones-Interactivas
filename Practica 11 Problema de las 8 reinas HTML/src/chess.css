@@ -1,0 +1,98 @@
+/*
+* @Author: Adrián Epifanio
+* @Date:   2020-04-24 13:28:04
+* @Last Modified time: 2020-05-04 19:07:50
+*/
+
+body {
+	background: #edebe9;
+	padding: 30px;
+	text-align: center;
+	font-weight: bold;
+}
+
+
+ul {
+	list-style-type: none;
+	text-align: left;
+}
+
+ul a {
+	text-decoration: none;
+	font-family: 'Noto Sans', Sans-Serif;
+	color: #787878;
+}
+
+li {
+	display: inline;
+	margin-left: 2%;
+	font:bold 15px;
+	font-size: 25px;
+}
+
+.menu {
+	position: relative;
+	width: 350px;
+	height: 300px;
+	top: -800px;
+	border-style: groove;
+	border-radius: 5px;
+	left: 5%;
+	background: white;
+}
+
+.text {
+	font-size: 30px;
+	position: relative;
+	top: 20px;
+	text-align: center;
+}
+
+canvas {
+	background: white;
+	position: relative;
+	top: 20px;
+	left: 5%;
+	margin: 0 auto;
+	margin-bottom: 1rem;
+	display: inline;
+}
+
+#myDataCanvas {
+	background: white;
+	position: relative;
+	left: 7%;
+	margin: 0 auto;
+	margin-bottom: 1rem;
+}
+
+.button {
+	background-color: #51B081;
+	color: white;
+	padding: 10px;
+	font:bold 15px 'Noto Sans', Sans-Serif;;
+	text-align: center;
+	font-size: 30px;
+	cursor: pointer;
+	position: relative;
+	top: 20px;
+}
+
+.footer {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	font-size: 30px;
+	color: #787878;
+	text-align: center;
+}
+
+.checkmark {
+	position: relative;
+	top: 20px;
+	left: 0;
+	height: 25px;
+	width: 25px;
+	background-color: #eee;
+}

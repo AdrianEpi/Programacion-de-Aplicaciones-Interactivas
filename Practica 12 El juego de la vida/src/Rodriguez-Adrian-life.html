@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8" />
+		<title>Rodríguez Adrián</title>
+		<link rel="stylesheet" type="text/css" href="./life.css">
+	</head>
+
+	<body>
+
+		<div class="infoText">
+			<input id="button0" class="button" type="button" onclick="start()" value="> INICIO" /><br><br>
+			<input id="button1" class="button" type="button" onclick="finishGame()" value="> FIN" /><br><br>
+			<input id="button2" class="button" type="button" onclick="pauseGame()" value="> PAUSA" /><br><br>
+			<input id="button2" class="button" type="button" onclick="nextTurn()" value="> PASO" /><br><br>
+			<label for="randomCells" class="text" >Número de Células <br>(recomendable + 300):</label><br>
+			<input type="text" class="input" id="randomCells" value="500"><br><br>
+			<label for="speed" class="text">Velocidad</label><br>
+			<input type="range" id="speed" name="speed" min="0" value="5" max="11">
+			
+
+		</div>
+
+		<div>
+
+			<!-- Canvas -->
+			<canvas id="myCanvas" width="600" height="600" style="border:0px solid black;"></canvas>
+
+		</div>
+
+		<!-- Scrips -->
+		<script src="./class-point.js"></script>
+		<script src="./class-line.js"></script>
+		<script src="./class-grid.js"></script>
+		<script src="./class-board.js"></script>
+		<script src="./class-cell.js"></script>
+		<script src="./class-lifeGame.js"></script>
+		<script src="./life-program.js"></script>
+
+		
+	</body>
+  
+</html>

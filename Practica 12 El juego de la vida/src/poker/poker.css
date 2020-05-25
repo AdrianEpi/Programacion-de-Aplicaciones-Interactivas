@@ -1,0 +1,35 @@
+/*
+* @Author: Adrián Epifanio
+* @Date:   2020-04-09 12:54:28
+* @Last Modified by:   Adrián Epifanio
+* @Last Modified time: 2020-04-09 12:54:53
+*/
+body {
+	font-family: sans-serif;
+	text-align: center;
+	padding: 3rem;
+	font-size: 1.125rem;
+	line-height: 1.5;
+	transition: all 725ms ease-in-out;
+}
+
+h1 {
+	font-size: 2rem;
+	font-weight: bolder;
+	margin-bottom: 1rem;
+}
+
+.button {
+  margin: auto;
+  padding: 1rem;
+  color: white;
+  background-color: darkgreen;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 1px 1px 10px white;
+  letter-spacing: 0.1rem;
+  font-size: 0.85rem;
+  position: relative;
+  padding-left: 1rem;
+  font-weight: bold;
+}

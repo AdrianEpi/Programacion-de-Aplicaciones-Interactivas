@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Rodriguez Adrian</title>
+  <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
+</head>
+
+<body>
+  <div id="mocha"></div>
+  <script src="../node_modules/mocha/mocha.js"></script>
+  <script src="../node_modules/chai/chai.js"></script>
+  <script>
+    mocha.setup("bdd");
+  </script>
+  <!-- load code you want to test here -->
+  <script src="../src/class-line.js"></script>
+  <script src="../src/class-point.js"></script>
+  <script src="../src/class-grid.js"></script>
+  <script src="../src/class-random-walk.js"></script>
+
+  <!-- load your test files here -->
+  <script src="./BrowserTest.js"></script>
+
+  <script>
+    mocha.run();
+  </script>
+</body>
+
+</html>

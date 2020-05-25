@@ -1,0 +1,55 @@
+/*
+* @Author: Adrián Epifanio
+* @Date:   2020-04-24 13:28:04
+* @Last Modified by:   Adrián Epifanio
+* @Last Modified time: 2020-04-25 11:54:32
+*/
+body {
+	font-family: sans-serif;
+	text-align: center;
+	padding: 3rem;
+	font-size: 1.125rem;
+	line-height: 1.5;
+	transition: all 725ms ease-in-out;
+}
+
+h1 {
+	font-size: 2rem;
+	font-weight: bolder;
+	margin-bottom: 1rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	font-weight: bolder;
+	margin-bottom: 1rem;
+}
+
+.button_ {
+    text-decoration:none;
+    font-weight: 600;
+    font-size: 20px;
+    color:#333333;
+    padding-top:15px;
+    padding-bottom:15px;
+    padding-left:40px;
+    padding-right:40px;
+    background-color:#FFD27D;
+    border-color: #d8d8d8;
+    border-width: 3px;
+    border-style: solid;
+    border-radius:35px;
+}
+
+#button1 {
+    position:absolute;
+    object-position: 10px 50px;
+    left: 15%;
+    
+}
+
+#button2 {
+    position:absolute;
+    left: 25%;
+    
+}

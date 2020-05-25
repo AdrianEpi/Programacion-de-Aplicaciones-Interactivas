@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8" />
+		<title>Rodríguez Adrián</title>
+		<link rel="stylesheet" type="text/css" href="./chess.css">
+	</head>
+
+	<body>
+		<div>
+			<ul>
+				<li><a href="">JUGAR</a></li>
+				<li><a href="">APRENDER</a></li>
+				<li><a href="">OBSERVAR</a></li>
+				<li><a href="">COMUNIDAD</a></li>
+				<li><a href="">HERRAMIENTAS</a></li>
+			</ul>
+
+			<!-- Canvas -->
+			<canvas id="myCanvas" width="800" height="800" style="border:0px solid black;"></canvas>
+			<canvas id="myDataCanvas" width="300" height="350" style="border:0px solid black;"></canvas>	
+
+			<div class = "menu">
+				<input id="button0" class="button" type="button" onclick="startGame()" value="Partida de Ajedrez" /><br><br>
+				<input id="button1" class="button" type="button" onclick="generateSolution()" value="Generar Solución" /><br><br>
+				<input id="button2" class="button" type="button" onclick="solve8Queen()" value="Siguente Solución" /><br><br>
+				<label class="text" >8 reinas generalizado </label>
+				<input type="checkbox" class="checkmark" id="cbox1" value="false"><br><br>
+			</div>
+
+			<div class="footer">
+	        	<p>Universidad de La Laguna, Programación de Aplicaciones Interactivas. Adrián Epifanio Rodríguez Hernández</p>
+	        </div>
+		</div>
+
+		<!-- Scrips -->
+		<script src="./class-point.js"></script>
+		<script src="./class-line.js"></script>
+		<script src="./class-rectangle.js"></script>
+		<script src="./class-chessBoard.js"></script>
+		<script src="./class-chessPieces.js"></script>
+		<script src="./class-problem8Queen.js"></script>
+		<script src="./class-chess.js"></script>
+		<script src="./chess-program.js"></script>
+
+	</body>
+  
+</html>

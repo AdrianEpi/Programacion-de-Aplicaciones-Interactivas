@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: class-chess.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: class-chess.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+* @Author: Adrián Epifanio
+* @File Chess Class
+* @summary Universidad de La Laguna
+*          Escuela Superior de Ingeniería y Tecnología
+*          Grado en Ingeniería Informática
+*          Asignatura: Programación de Aplicaciones Interactivas
+*          Curso: 3º
+*          Práctica 11 PAI - Chess
+* @link  Enunciado de la práctica:
+*         https://github.com/fsande/PAI-P11-Chess/blob/master/2019-2020_p10_Chess.md
+*         Repositorio git con este (y otros) códigos:
+*         https://github.com/ULL-ESIT-INF-PAI-2019-2020/pai-p11-chess-AdrianEpi
+* @Date:   2020-05-01
+*/
+'use strict';
+
+
+/**
+ * @desc      This class describes a Chess. This class adapt the size of the chess board to the canvas size and paints it on screen.
+ *
+ * @class      Chess (name)
+ */
+class Chess {
+
+  /**
+   * @desc Constructs a new instance of a Chess class
+   *
+   * @param      {element}  canvas_  The canvas
+   * @param      {element}  ctx_     The context
+   */
+  constructor(canvas_, ctx_) {
+    this.canvas = canvas_;
+    this.ctx = ctx_;
+    this.chess = [];
+    this.pieces = new ChessPieces();
+    this.solutions8Queens = [];
+  }
+
+  /**
+   * @desc       Gets the canvas.
+   *
+   * @return     {element}  The canvas.
+   */
+  get_Canvas() {
+    return this.canvas;
+  }
+
+  /**
+   * @desc       Gets the context.
+   *
+   * @return     {element}  The context.
+   */
+  get_Ctx() {
+    return this.ctx;
+  }
+
+  /**
+   * @desc       Gets the solutions 8 queens.
+   *
+   * @return     {Array}  The solutions 8 queens.
+   */
+  get_Solutions8Queens() {
+    return this.solutions8Queens;
+  }
+
+  /**
+   * @desc       Sets the canvas.
+   *
+   * @param      {element}  canvas_  The canvas
+   */
+  set_Canvas(canvas_) {
+    this.canvas = canvas_;
+  }
+
+  /**
+   * @desc       Sets the context.
+   *
+   * @param      {element}  ctx_    The context
+   */
+  set_Ctx(ctx_) {
+    this.ctx = ctx_;
+  }
+
+  /**
+   * @desc       Sets the solutions 8 queens.
+   *
+   * @param      {Array}  solutions8Queens_  The solutions 8 queens
+   */
+  set_Solutions8Queens(solutions8Queens_) {
+    this.solutions8Queens = solutions8Queens_;
+  }
+
+  /**
+   * @desc       Initializes the chess, generating and loading all the pieces that are going to be used along the game.
+   */
+  /* istanbul ignore next */
+  generateChess() {
+    const LETTERS = new Array('h', 'g', 'f', 'e', 'd', 'c', 'b', 'a');
+    this.pieces.set_Images();
+    for (let counter = 0; counter &lt; 64; counter++) {
+      let number_ = (counter % 8);
+      let data = {
+        posX: number_,
+        posY: (counter % number_),
+        number: number_ + 1,
+        letter: LETTERS[number_],
+        img: new Image(),
+      }
+      this.chess[counter] = data;
+    }
+  }
+
+  /**
+   * @desc     Initalizes all the pieces on their start position for start a game.
+   */
+  /* istanbul ignore next */
+  startPosition() {
+    for (let counter = 8; counter &lt; 16; counter++) {
+      this.chess[counter].img.src = this.pieces.get_WhitePawn();
+    }
+    for (let counter = 48; counter &lt; 56; counter++) {
+      this.chess[counter].img.src = this.pieces.get_BlackPawn();
+    }
+    this.chess[61].img.src = this.pieces.get_BlackBishop();
+    this.chess[58].img.src = this.pieces.get_BlackBishop();
+    this.chess[2].img.src = this.pieces.get_WhiteBishop();
+    this.chess[5].img.src = this.pieces.get_WhiteBishop();
+    this.chess[62].img.src = this.pieces.get_BlackKnight();
+    this.chess[57].img.src = this.pieces.get_BlackKnight();
+    this.chess[1].img.src = this.pieces.get_WhiteKnight();
+    this.chess[6].img.src = this.pieces.get_WhiteKnight();
+    this.chess[63].img.src = this.pieces.get_BlackRook();
+    this.chess[56].img.src = this.pieces.get_BlackRook();
+    this.chess[0].img.src = this.pieces.get_WhiteRook();
+    this.chess[7].img.src = this.pieces.get_WhiteRook();
+    this.chess[60].img.src = this.pieces.get_BlackQueen();
+    this.chess[4].img.src = this.pieces.get_WhiteQueen();
+    this.chess[59].img.src = this.pieces.get_BlackKing();
+    this.chess[3].img.src = this.pieces.get_WhiteKing();
+  }
+
+  /**
+   * @desc       Prints the board on the screen with all the pieces on their places.
+   *
+   * @param      {element}  ctx     The context
+   */
+  /* istanbul ignore next */
+  printBoard(ctx) {
+    const SIZE = this.canvas.width / 8;
+    let counter = 0;
+    for (let height = 0; height &lt; 8; height++) {
+      for (let width = 0; width &lt; 8; width++) {
+        ctx.beginPath();
+        let img = new Image();
+        img = this.chess[counter].img;
+        img.onload = function() {
+          ctx.drawImage(img, width * SIZE, height * SIZE);         
+        }
+         ctx.closePath();
+        counter++;
+      }
+    }
+  }
+
+  /**
+   * @desc Assigns the solutions generated by the class Problem8Queens to the problem.
+   */
+  solve8Queens(type) {
+    let queens = new Problem8Queens(type);
+    queens.solveProblem();
+    for (let counter = 0; counter &lt; queens.get_Solutions().length; counter++) {
+      this.solutions8Queens[counter] = queens.get_Solutions()[counter];
+    }
+  }
+
+  /**
+   * @desc        Assign the queens generated before to their respective places on the chess board.
+   *
+   * @param      {number}  solution  The number og the solution;
+   */
+  generate8QueenSolution(solution) {
+    const MAXQUEENS = 8;
+    for (let counter = 0; counter &lt; MAXQUEENS; counter++) {
+      let position = (this.solutions8Queens[solution][counter].row * MAXQUEENS + this.solutions8Queens[solution][counter].column);
+      this.chess[position].img.src = this.pieces.get_BlackQueen();
+    }
+  }
+
+  /**
+   * @desc       Prints the positions in algebraic notation of the queens in board.
+   *
+   * @param      {element}  canvas    The canvas
+   * @param      {element}  ctx       The context
+   * @param      {number}   solution  The solution
+   */
+  /* istanbul ignore next */
+  printData(canvas, ctx, solution) {
+    let height = 30;
+    const MAXQUEENS = 8;
+    ctx.font = 'bold 28px sans-serif';
+    ctx.beginPath();
+    ctx.fillStyle = 'WHITE';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = 'GREY';
+    ctx.fillText('\t\t\tPositions:' , 20, height);
+    ctx.stroke();
+    height = height + 50;
+    ctx.font = 'bold 22px sans-serif';
+    for (let counter = 0; counter &lt; MAXQUEENS; counter++) {
+      let string = 'Queen ' + (counter + 1) + '  ->  (' + this.solutions8Queens[solution][counter].letter + ' , ' + this.solutions8Queens[solution][counter].number + ')';
+      ctx.fillText(string, 20, height);
+      ctx.stroke();
+      height = height + 30;
+    }
+    ctx.closePath();
+  }
+  
+}
+
+if (typeof require !== 'undefined') {
+  module.exports = { Chess: Chess };
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BoardNumber.html">BoardNumber</a></li><li><a href="Chess.html">Chess</a></li><li><a href="ChessBoard.html">ChessBoard</a></li><li><a href="ChessPieces.html">ChessPieces</a></li><li><a href="Grid.html">Grid</a></li><li><a href="Line.html">Line</a></li><li><a href="Point.html">Point</a></li><li><a href="Problem8Queens.html">Problem8Queens</a></li><li><a href="Rectangle.html">Rectangle</a></li></ul><h3>Global</h3><ul><li><a href="global.html#cleanDataCanvas">cleanDataCanvas</a></li><li><a href="global.html#generateSolution">generateSolution</a></li><li><a href="global.html#main">main</a></li><li><a href="global.html#solve8Queen">solve8Queen</a></li><li><a href="global.html#startGame">startGame</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Wed May 06 2020 13:55:19 GMT+0100 (WEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

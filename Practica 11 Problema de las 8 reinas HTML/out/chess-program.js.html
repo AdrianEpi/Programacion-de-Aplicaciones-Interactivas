@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: chess-program.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: chess-program.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+* @Author: Adrián Epifanio
+* @File Main program file
+* @summary Universidad de La Laguna
+*          Escuela Superior de Ingeniería y Tecnología
+*          Grado en Ingeniería Informática
+*          Asignatura: Programación de Aplicaciones Interactivas
+*          Curso: 3º
+*          Práctica 11 PAI - Chess
+* @link  Enunciado de la práctica:
+*         https://github.com/fsande/PAI-P11-Chess/blob/master/2019-2020_p10_Chess.md
+*         Repositorio git con este (y otros) códigos:
+*         https://github.com/ULL-ESIT-INF-PAI-2019-2020/pai-p11-chess-AdrianEpi
+* @Date:   2020-05-01
+*/
+
+'use strict';
+let problem8QueenSolution = 0;
+let problem8QueenGeneralizedSolution = 0;
+main();
+
+
+/**
+ * @desc Main function
+ */
+function main() {
+  const canvas = document.getElementById('myCanvas');
+  let ctx = canvas.getContext('2d');
+  let backGround = new ChessBoard(canvas, ctx);
+  backGround.printChessBoard();
+  cleanDataCanvas();
+}
+
+/**
+ * @desc Solves and prints on canvas the problem of the 8 queens next solution.
+ */
+function solve8Queen() {
+  cleanDataCanvas();
+  const canvas = document.getElementById('myCanvas');
+  let ctx = canvas.getContext('2d');
+  const canvas2 = document.getElementById('myDataCanvas');
+  let ctx2 = canvas2.getContext('2d');
+  const checkBox = document.getElementById('cbox1').checked;
+  let backGround = new ChessBoard(canvas, ctx);
+  backGround.printChessBoard();
+  let game = new Chess(canvas, ctx);
+  game.generateChess();
+
+  if (checkBox === true) {
+    game.solve8Queens(1);
+    if (problem8QueenSolution &lt; game.get_Solutions8Queens().length) {
+      game.generate8QueenSolution(problem8QueenSolution);
+      game.printBoard(ctx);
+      game.printData(canvas2, ctx2, problem8QueenSolution);
+      problem8QueenSolution++;
+    }
+    else {
+      alert('Sorry, there are no more solutions for de 8 Queens Problem.');
+    }
+  }
+  else {
+    game.solve8Queens(0);
+    if (problem8QueenGeneralizedSolution &lt; game.get_Solutions8Queens().length) {
+      game.generate8QueenSolution(problem8QueenGeneralizedSolution);
+      game.printBoard(ctx);
+      game.printData(canvas2, ctx2, problem8QueenGeneralizedSolution);
+      problem8QueenGeneralizedSolution++;
+    }
+    else {
+      alert('Sorry, there are no more solutions for the 8 Queens Generalized Problem.');
+    }
+
+  }
+}
+
+/**
+ * @desc    Restarts the solution counter and prints the first solution.
+ */
+function generateSolution() {
+  cleanDataCanvas();
+  const checkBox = document.getElementById('cbox1').checked;
+  if (checkBox === true) {
+    problem8QueenSolution = 0;
+  }
+  else {
+    problem8QueenGeneralizedSolution = 0;
+  }
+  solve8Queen();
+}
+
+/**
+ * @desc     Initializes the board with the game starts positions.
+ */
+function startGame() {
+  cleanDataCanvas();
+  const canvas = document.getElementById('myCanvas');
+  let ctx = canvas.getContext('2d');
+  let backGround = new ChessBoard(canvas, ctx);
+  backGround.printChessBoard();
+  let game = new Chess(canvas, ctx);
+  game.generateChess();
+  game.startPosition();
+  game.printBoard(ctx);
+}
+
+/**
+ * @desc    Erases the visialization of the 2nd canvas in screen while not needed.
+ */
+function cleanDataCanvas() {
+  const BGCOLOR = '#edebe9';
+  const dataCanvas = document.getElementById('myDataCanvas');
+  let ctx = dataCanvas.getContext('2d');
+  ctx.beginPath();
+  ctx.fillStyle = BGCOLOR;
+  ctx.strokeStyle = BGCOLOR;
+  ctx.fillRect(0, 0, dataCanvas.width, dataCanvas.height);
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BoardNumber.html">BoardNumber</a></li><li><a href="Chess.html">Chess</a></li><li><a href="ChessBoard.html">ChessBoard</a></li><li><a href="ChessPieces.html">ChessPieces</a></li><li><a href="Grid.html">Grid</a></li><li><a href="Line.html">Line</a></li><li><a href="Point.html">Point</a></li><li><a href="Problem8Queens.html">Problem8Queens</a></li><li><a href="Rectangle.html">Rectangle</a></li></ul><h3>Global</h3><ul><li><a href="global.html#cleanDataCanvas">cleanDataCanvas</a></li><li><a href="global.html#generateSolution">generateSolution</a></li><li><a href="global.html#main">main</a></li><li><a href="global.html#solve8Queen">solve8Queen</a></li><li><a href="global.html#startGame">startGame</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Wed May 06 2020 13:55:19 GMT+0100 (WEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

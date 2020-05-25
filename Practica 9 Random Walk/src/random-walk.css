@@ -1,0 +1,25 @@
+/*
+* @Author: Adrián Epifanio
+* @Date:   2020-04-09 12:54:28
+* @Last Modified by:   Adrián Epifanio
+* @Last Modified time: 2020-04-20 20:10:05
+*/
+body {
+	font-family: sans-serif;
+	text-align: center;
+	padding: 3rem;
+	font-size: 1.125rem;
+	line-height: 1.5;
+	transition: all 725ms ease-in-out;
+}
+
+h1 {
+	font-size: 2rem;
+	font-weight: bolder;
+	margin-bottom: 1rem;
+}
+h2 {
+	font-size: 1.5rem;
+	font-weight: bolder;
+	margin-bottom: 1rem;
+}

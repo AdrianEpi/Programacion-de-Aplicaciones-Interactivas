@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: class-boardNumber.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: class-boardNumber.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+* @Author: Adrián Epifanio
+* @File Class BoardNumber
+* @summary Universidad de La Laguna
+*          Escuela Superior de Ingeniería y Tecnología
+*          Grado en Ingeniería Informática
+*          Asignatura: Programación de Aplicaciones Interactivas
+*          Curso: 3º
+*          Práctica 11 PAI - Chess
+* @link  Enunciado de la práctica:
+*         https://github.com/fsande/PAI-P11-Chess/blob/master/2019-2020_p10_Chess.md
+*         Repositorio git con este (y otros) códigos:
+*         https://github.com/ULL-ESIT-INF-PAI-2019-2020/pai-p11-chess-AdrianEpi
+* @Date:   2020-05-06
+*/
+
+/**
+ * @desc This class is going to generate random numbers 0-9 and print them on the canvas.
+ */
+class BoardNumber {
+
+  /**
+   * @desc Builds a new object of class BoardNumber
+   * 
+   * @param {element} canvas_ 
+   * @param {element} ctx_ 
+   * @param {number} widthCells_ 
+   * @param {number} heightCells_ 
+   */
+  constructor(canvas_, ctx_, widthCells_, heightCells_) {
+    this.canvas = canvas_;
+    this.ctx = ctx_;
+    this.numbersAmmount = widthCells_ * heightCells_;
+    this.board = [];
+    this.widthCells = widthCells_;
+    this.heightCells = heightCells_;
+  }
+
+  /**
+   * @desc       Gets the canvas.
+   *
+   * @return     {element}  The canvas.
+   */
+  get_Canvas() {
+    return this.canvas;
+  }
+
+  /**
+   * @desc       Gets the context.
+   *
+   * @return     {element}  The context.
+   */
+  get_Ctx() {
+    return this.ctx;
+  }
+
+  /**
+   * @desc       Gets the numbers ammount.
+   *
+   * @return     {number}  The numbers ammount.
+   */
+  get_NumbersAmmount() {
+    return this.numbersAmmount;
+  }
+
+  /**
+   * @desc       Sets the canvas.
+   *
+   * @param      {element}  canvas_  The canvas
+   */
+  set_Canvas(canvas_) {
+    this.canvas = canvas_;
+  }
+
+  /**
+   * @desc       Sets the context.
+   *
+   * @param      {element}  ctx_    The context
+   */
+  set_Ctx(ctx_) {
+    this.ctx = ctx_;
+  }
+
+  /**
+   * @desc       Sets the numbers ammount.
+   *
+   * @param      {number}  numbersAmmount_    The numbers ammount
+   */
+  set_NumbersAmmount(numbersAmmount_) {
+    this.numbersAmmount = numbersAmmount_;
+  }
+
+  /**
+   * @desc       Generates a random number from 0 to 9.
+   * 
+   * @return     {number}  The random number.
+   */
+  get_RandomNumber() {
+    const NUMBERS = new Array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
+    let totalPosibilites = NUMBERS.length;
+    let randomNumber_ = (Math.random() * (totalPosibilites));
+    randomNumber_ = Math.floor(randomNumber_)
+    return randomNumber_;
+  }
+
+  /**
+   * @desc Generates and initializes de board assigning random numbers to each position.
+   */
+  generateBoard() {
+    for (let counter = 0; counter &lt; this.numbersAmmount; counter++) {
+      let tmpNumber = {
+        color: 'red',
+        number: this.get_RandomNumber(),
+      }
+      this.board[counter] = tmpNumber;
+    }
+  }
+
+  /**
+   * @desc Prints the board with their respective numbers on canvas.
+   * 
+   * @param {elemet} ctx The context
+   */
+  /* istanbul ignore next */
+  printBoard(ctx) {
+    ctx.font = 'bold 90px sans-serif';
+    let counter = 0;
+    for (let height = 90; height &lt; this.canvas.height + 100; height = height + 100) {
+      for (let width = 20; width &lt; this.canvas.width; width = width + 100) {
+        if (counter >= (this.widthCells * this.heightCells)) {
+          break;
+        }
+        ctx.beginPath();
+        ctx.fillStyle = this.board[counter].color;
+        ctx.fillText(this.board[counter].number, width, height);
+        ctx.stroke();
+        ctx.closePath();
+        counter++;
+      }
+    }
+  }
+
+  /**
+   * @desc Solves the problem of finding 4 consecutive numbers in row, column or diagonal
+   */
+  solveProblem() {
+    // Solve Rows
+    for (let height = 0; height &lt; this.heightCells; height++) {
+      let counter = 0;
+      let number = this.board[height * this.widthCells].number;
+      let positions = [];
+      positions[0] = height * this.widthCells;
+      for (let width = 1; width &lt; this.widthCells; width++) {
+        if (this.board[(height * this.widthCells) + width].number === number) {
+          positions[positions.length] = (height * this.widthCells) + width;
+          counter++;
+        }
+        else if (counter &lt; 3) {
+          counter = 0;
+          positions = [];
+          positions[0] = (height * this.widthCells) + width;
+          number = this.board[(height * this.widthCells) + width].number;
+        }
+        else {
+          break;
+        }
+      }
+      if (counter === 3) {
+        for (let pos = 0; pos &lt; positions.length; pos++) {
+          this.board[positions[pos]].color = 'yellow'
+        }
+      }
+    }
+
+    // Solve Columns
+    for (let height = 0; height &lt; this.heightCells; height++) {
+      let counter = 0;
+      let number = this.board[height * this.widthCells].number;
+      let positions = [];
+      positions[0] = height * this.widthCells;
+      for (let width = 0; width &lt; (this.widthCells * this.heightCells) - height; width = width + 7) {
+        if (this.board[width].number === number) {
+          positions[positions.length] = width;
+          counter++;
+        }
+        else if (counter &lt; 3) {
+          counter = 0;
+          positions = [];
+          positions[0] = width;
+          number = this.board[width].number;
+        }
+        else {
+          break;
+        }
+      }
+      if (counter === 3) {
+        for (let pos = 0; pos &lt; positions.length; pos++) {
+          this.board[positions[pos]].color = 'yellow'
+        }
+      }
+    }
+  }
+}
+
+if (typeof require !== 'undefined') {
+  module.exports = { BoardNumber: BoardNumber };
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BoardNumber.html">BoardNumber</a></li><li><a href="Chess.html">Chess</a></li><li><a href="ChessBoard.html">ChessBoard</a></li><li><a href="ChessPieces.html">ChessPieces</a></li><li><a href="Grid.html">Grid</a></li><li><a href="Line.html">Line</a></li><li><a href="Point.html">Point</a></li><li><a href="Problem8Queens.html">Problem8Queens</a></li><li><a href="Rectangle.html">Rectangle</a></li></ul><h3>Global</h3><ul><li><a href="global.html#cleanDataCanvas">cleanDataCanvas</a></li><li><a href="global.html#generateSolution">generateSolution</a></li><li><a href="global.html#main">main</a></li><li><a href="global.html#solve8Queen">solve8Queen</a></li><li><a href="global.html#startGame">startGame</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Wed May 06 2020 13:55:19 GMT+0100 (WEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

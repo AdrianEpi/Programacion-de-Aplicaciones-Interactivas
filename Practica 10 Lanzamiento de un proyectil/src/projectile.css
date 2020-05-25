@@ -1,0 +1,52 @@
+/*
+* @Author: Adrián Epifanio
+* @Date:   2020-04-24 13:28:04
+* @Last Modified by:   Adrián Epifanio
+* @Last Modified time: 2020-04-25 12:28:57
+*/
+body {
+	font-family: sans-serif;
+	text-align: center;
+	padding: 3rem;
+	font-size: 1.125rem;
+	line-height: 1.5;
+	transition: all 725ms ease-in-out;
+}
+
+h1 {
+	font-size: 2rem;
+	font-weight: bolder;
+	margin-bottom: 1rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	font-weight: bolder;
+	margin-bottom: 1rem;
+}
+
+
+.button_ {
+	object-position: 150px 50px;
+  padding:20px;
+  background: RED;
+  color:white;
+  font:bold 15px/5px verdana;
+  width:150px;
+  cursor:pointer;
+  cursor:hand;
+  text-align:center;
+}
+
+.text_ {
+	object-position: 100px 50px;
+    color:black;
+    font:bold 15px verdana;
+}
+
+.input_ {
+	object-position: 100px 50px;
+	border: 2px solid black;
+	border-radius: 4px;
+	text-align:left;
+}
