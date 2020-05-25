@@ -1,0 +1,11 @@
+{
+ "hasPair": 43971,
+ "hasTwoPair": 23377,
+ "hasThreeOfAKind": 4693,
+ "hasStraight": 4641,
+ "hasFlush": 2996,
+ "hasFullHouse": 2532,
+ "hasFourOfAKind": 135,
+ "hasStraightFlush": 26,
+ "anyOfThem": 17629
+}

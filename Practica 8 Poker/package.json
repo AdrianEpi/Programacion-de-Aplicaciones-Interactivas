@@ -1,0 +1,28 @@
+{
+  "name": "usuario",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node web-server/app.js",
+    "test": "mocha test/test.js",
+    "coverage-html": "nyc --reporter html npm run test",
+    "coverage": "nyc npm run test"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.17.1",
+    "jsdoc": "^3.6.4",
+    "mkdirp": "^1.0.3",
+    "readline-sync": "^1.4.10",
+    "request": "^2.88.2",
+    "underscore": "^1.9.2"
+  },
+  "devDependencies": {
+    "babel-plugin-istanbul": "^6.0.0",
+    "chai": "^4.2.0",
+    "mocha": "^7.1.1",
+    "nyc": "^15.0.1"
+  }
+}
